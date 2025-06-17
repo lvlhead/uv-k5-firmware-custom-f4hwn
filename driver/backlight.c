@@ -102,24 +102,6 @@ void BACKLIGHT_TurnOn(void)
     backlightOn = true;
 
 #ifdef ENABLE_FEAT_F4HWN
-    if(gK5startup == true) {
-        #if defined(ENABLE_FMRADIO) && defined(ENABLE_SPECTRUM)
-            BACKLIGHT_SetBrightness(gEeprom.BACKLIGHT_MAX);
-        #else
-            for(uint8_t i = 0; i <= gEeprom.BACKLIGHT_MAX; i++)
-            {
-                BACKLIGHT_SetBrightness(i);
-                SYSTEM_DelayMs(50);
-            }
-        #endif
-
-        BACKLIGHT_Sound();
-    }
-    else
-    {
-        BACKLIGHT_SetBrightness(gEeprom.BACKLIGHT_MAX);
-    }
-#else
     BACKLIGHT_SetBrightness(gEeprom.BACKLIGHT_MAX);
 #endif
 

@@ -1135,7 +1135,6 @@ void APP_Update(void)
             gRxIdleMode     = true;
             goToSleep = false;
 
-            BK4819_DisableVox();
             BK4819_Sleep();
             BK4819_ToggleGpioOut(BK4819_GPIO0_PIN28_RX_ENABLE, false);
 
@@ -1642,9 +1641,9 @@ void APP_TimeSlice500ms(void)
 
     if (gReducedService)
     {
-        BOARD_ADC_GetBatteryInfo(&gBatteryCurrentVoltage, &gBatteryCurrent);
+        BOARD_ADC_GetBatteryInfo(&gBatteryCurrentVoltage);
 
-        if (gBatteryCurrent > 500 || gBatteryCalibration[3] < gBatteryCurrentVoltage)
+        if (gBatteryCalibration[3] < gBatteryCurrentVoltage)
         {
             #ifdef ENABLE_OVERLAY
                 overlay_FLASH_RebootToBootloader();
@@ -1665,7 +1664,7 @@ void APP_TimeSlice500ms(void)
 
         if ((gBatteryCheckCounter & 1) == 0)
         {
-            BOARD_ADC_GetBatteryInfo(&gBatteryVoltages[gBatteryVoltageIndex++], &gBatteryCurrent);
+            BOARD_ADC_GetBatteryInfo(&gBatteryVoltages[gBatteryVoltageIndex++]);
             if (gBatteryVoltageIndex > 3)
                 gBatteryVoltageIndex = 0;
             BATTERY_GetReadings(true);

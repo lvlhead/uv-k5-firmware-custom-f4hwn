@@ -29,7 +29,6 @@
 
 uint16_t          gBatteryCalibration[6];
 uint16_t          gBatteryCurrentVoltage;
-uint16_t          gBatteryCurrent;
 uint16_t          gBatteryVoltages[4];
 uint16_t          gBatteryVoltageAverage;
 uint8_t           gBatteryDisplayLevel;
@@ -140,28 +139,6 @@ void BATTERY_GetReadings(const bool bDisplayBatteryLevel)
 
     if ((gScreenToDisplay == DISPLAY_MENU) && UI_MENU_GetCurrentMenuId() == MENU_VOL)
         gUpdateDisplay = true;
-
-    if (gBatteryCurrent < 501)
-    {
-        if (gChargingWithTypeC)
-        {
-            gUpdateStatus  = true;
-            gUpdateDisplay = true;
-        }
-
-        gChargingWithTypeC = false;
-    }
-    else
-    {
-        if (!gChargingWithTypeC)
-        {
-            gUpdateStatus  = true;
-            gUpdateDisplay = true;
-            BACKLIGHT_TurnOn();
-        }
-
-        gChargingWithTypeC = true;
-    }
 
     if (PreviousBatteryLevel != gBatteryDisplayLevel)
     {

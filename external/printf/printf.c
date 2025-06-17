@@ -643,6 +643,7 @@ static int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const
       }
     }
 
+#ifndef PRINTF_VOXLESS
     // evaluate length field
     switch (*format) {
       case 'l' :
@@ -653,6 +654,7 @@ static int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const
           format++;
         }
         break;
+
       case 'h' :
         flags |= FLAGS_SHORT;
         format++;
@@ -661,6 +663,7 @@ static int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const
           format++;
         }
         break;
+
 #if defined(PRINTF_SUPPORT_PTRDIFF_T)
       case 't' :
         flags |= (sizeof(ptrdiff_t) == sizeof(long) ? FLAGS_LONG : FLAGS_LONG_LONG);
@@ -678,6 +681,7 @@ static int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const
       default :
         break;
     }
+#endif // PRINTF_VOXLESS
 
     // evaluate specifier
     switch (*format) {
@@ -818,7 +822,7 @@ static int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const
         format++;
         break;
       }
-
+#ifndef PRINTF_VOXLESS
       case 'p' : {
         width = sizeof(void*) * 2U;
         flags |= FLAGS_ZEROPAD | FLAGS_UPPERCASE;
@@ -836,7 +840,7 @@ static int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const
         format++;
         break;
       }
-
+#endif // PRINTF_VOXLESS
       case '%' :
         out('%', buffer, idx++, maxlen);
         format++;
@@ -858,7 +862,7 @@ static int _vsnprintf(out_fct_type out, char* buffer, const size_t maxlen, const
 
 
 ///////////////////////////////////////////////////////////////////////////////
-
+#ifndef PRINTF_VOXLESS
 int printf_(const char* format, ...)
 {
   va_list va;
@@ -868,7 +872,7 @@ int printf_(const char* format, ...)
   va_end(va);
   return ret;
 }
-
+#endif
 
 int sprintf_(char* buffer, const char* format, ...)
 {
@@ -889,12 +893,13 @@ int snprintf_(char* buffer, size_t count, const char* format, ...)
   return ret;
 }
 
-
+#ifndef PRINTF_VOXLESS
 int vprintf_(const char* format, va_list va)
 {
   char buffer[1];
   return _vsnprintf(_out_char, buffer, (size_t)-1, format, va);
 }
+#endif
 
 
 int vsnprintf_(char* buffer, size_t count, const char* format, va_list va)
@@ -902,7 +907,7 @@ int vsnprintf_(char* buffer, size_t count, const char* format, va_list va)
   return _vsnprintf(_out_buffer, buffer, count, format, va);
 }
 
-
+#ifndef PRINTF_VOXLESS
 int fctprintf(void (*out)(char character, void* arg), void* arg, const char* format, ...)
 {
   va_list va;
@@ -912,3 +917,4 @@ int fctprintf(void (*out)(char character, void* arg), void* arg, const char* for
   va_end(va);
   return ret;
 }
+#endif

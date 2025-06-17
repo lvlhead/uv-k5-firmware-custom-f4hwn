@@ -4,20 +4,20 @@
 # 1 = enable
 
 # ---- STOCK QUANSHENG FEATURES ----
-ENABLE_FMRADIO                	?= 0
+ENABLE_FMRADIO                	?= 1
 ENABLE_UART                   	?= 1
 ENABLE_AIRCOPY                	?= 0
 ENABLE_NOAA                   	?= 0
 ENABLE_VOICE                  	?= 0
-ENABLE_VOX                    	?= 1
+ENABLE_VOX                    	?= 0
 ENABLE_ALARM                  	?= 0
-ENABLE_TX1750                 	?= 1
+ENABLE_TX1750                 	?= 0
 ENABLE_PWRON_PASSWORD         	?= 0
 ENABLE_DTMF_CALLING           	?= 0
-ENABLE_FLASHLIGHT             	?= 1
+ENABLE_FLASHLIGHT             	?= 0
 
 # ---- CUSTOM MODS ----
-ENABLE_SPECTRUM               	?= 0
+ENABLE_SPECTRUM               	?= 1
 ENABLE_BIG_FREQ               	?= 1
 ENABLE_SMALL_BOLD             	?= 1
 ENABLE_CUSTOM_MENU_LAYOUT     	?= 1
@@ -47,17 +47,17 @@ ENABLE_FEAT_F4HWN_RX_TX_TIMER   ?= 1
 ENABLE_FEAT_F4HWN_CHARGING_C    ?= 0
 ENABLE_FEAT_F4HWN_SLEEP         ?= 1
 ENABLE_FEAT_F4HWN_RESUME_STATE  ?= 1
-ENABLE_FEAT_F4HWN_NARROWER      ?= 1
-ENABLE_FEAT_F4HWN_INV           ?= 1
-ENABLE_FEAT_F4HWN_CTR           ?= 1
+ENABLE_FEAT_F4HWN_NARROWER      ?= 0
+ENABLE_FEAT_F4HWN_INV           ?= 0
+ENABLE_FEAT_F4HWN_CTR           ?= 0
 ENABLE_FEAT_F4HWN_RESCUE_OPS    ?= 0
 ENABLE_FEAT_F4HWN_VOL           ?= 0
 ENABLE_FEAT_F4HWN_RESET_CHANNEL ?= 0
 ENABLE_FEAT_F4HWN_PMR           ?= 0
 ENABLE_FEAT_F4HWN_GMRS_FRS_MURS	?= 0
-ENABLE_FEAT_F4HWN_CA         	?= 1
+ENABLE_FEAT_F4HWN_CA         	?= 0
 ENABLE_FEAT_F4HWN_DEBUG         ?= 0
-ENABLE_REGA	                	?= 0
+ENABLE_REGA	               	?= 0
 
 # ---- DEBUGGING ----
 ENABLE_AM_FIX_SHOW_DATA       	?= 0
@@ -261,9 +261,9 @@ ifeq ($(ENABLE_OVERLAY),1)
 	ASFLAGS += -DENABLE_OVERLAY
 endif
 
-CFLAGS =
+CFLAGS = -fmerge-all-constants
 ifeq ($(ENABLE_CLANG),0)
-	CFLAGS += -Oz -Wall -Werror -mcpu=cortex-m0 -fshort-enums -fno-delete-null-pointer-checks -std=c2x -MMD
+	CFLAGS += -Oz -Wall -Werror -mcpu=cortex-m0 -fshort-enums -fno-delete-null-pointer-checks -std=c2x -MMD -funroll-all-loops
 	#CFLAGS += -Os -Wall -Werror -mcpu=cortex-m0 -fno-builtin -fshort-enums -fno-delete-null-pointer-checks -std=c2x -MMD
 	#CFLAGS += -Os -Wall -Werror -mcpu=cortex-m0 -fno-builtin -fshort-enums -fno-delete-null-pointer-checks -std=c11 -MMD
 	#CFLAGS += -Os -Wall -Werror -mcpu=cortex-m0 -fno-builtin -fshort-enums -fno-delete-null-pointer-checks -std=c99 -MMD

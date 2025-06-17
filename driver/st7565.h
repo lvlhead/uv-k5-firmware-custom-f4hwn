@@ -31,7 +31,6 @@ void ST7565_DrawLine(const unsigned int Column, const unsigned int Line, const u
 void ST7565_BlitFullScreen(void);
 void ST7565_BlitLine(unsigned line);
 void ST7565_BlitStatusLine(void);
-void ST7565_FillScreen(uint8_t Value);
 void ST7565_Init(void);
 #ifdef ENABLE_FEAT_F4HWN_SLEEP
     void ST7565_ShutDown(void);
